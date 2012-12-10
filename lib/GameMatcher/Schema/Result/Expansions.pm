@@ -6,6 +6,8 @@ use warnings;
 
 use base 'DBIx::Class::Core';
 
+__PACKAGE__->load_components(qw< TimeStamp >);
+
 __PACKAGE__->table('expansions');
 
 __PACKAGE__->add_columns(
@@ -16,10 +18,10 @@ __PACKAGE__->add_columns(
     },
 
     'game' => {
-        'data_type'         => 'integer',
-        'is_nullable'       => 0,
+        'data_type'   => 'integer',
+        'is_nullable' => 0,
     },
-    
+
     'name' => {
         'data_type'   => 'varchar',
         'size'        => 255,
@@ -27,29 +29,29 @@ __PACKAGE__->add_columns(
     },
 
     'min_players' => {
-        'data_type'         => 'integer',
-        'is_nullable'       => 0,
+        'data_type'   => 'integer',
+        'is_nullable' => 0,
     },
 
     'max_players' => {
-        'data_type'         => 'integer',
-        'is_nullable'       => 0,
+        'data_type'   => 'integer',
+        'is_nullable' => 0,
     },
 
     'optimal_players' => {
-        'data_type'         => 'varchar',
-        'size'              => 255,
-        'is_nullable'       => 0,
+        'data_type'   => 'varchar',
+        'size'        => 255,
+        'is_nullable' => 0,
     },
 
     'playtime' => {
-        'data_type'         => 'integer',
-        'is_nullable'       => 0,
+        'data_type'   => 'integer',
+        'is_nullable' => 0,
     },
 
     'description' => {
-        'data_type'         => 'text',
-        'is_nullable'       => 0,
+        'data_type'   => 'text',
+        'is_nullable' => 0,
     },
 
     'created' => {

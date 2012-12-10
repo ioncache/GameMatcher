@@ -6,6 +6,8 @@ use warnings;
 
 use base 'DBIx::Class::Core';
 
+__PACKAGE__->load_components(qw< TimeStamp >);
+
 __PACKAGE__->table('games');
 
 __PACKAGE__->add_columns(

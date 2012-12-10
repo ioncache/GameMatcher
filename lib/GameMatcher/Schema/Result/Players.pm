@@ -6,6 +6,8 @@ use warnings;
 
 use base 'DBIx::Class::Core';
 
+__PACKAGE__->load_components(qw< TimeStamp >);
+
 __PACKAGE__->table('players');
 
 __PACKAGE__->add_columns(
@@ -43,7 +45,7 @@ __PACKAGE__->add_columns(
         'data_type'   => 'varchar',
         'size'        => 255,
         'is_nullable' => 1
-    },    
+    },
 
     'created' => {
         'data_type'     => 'timestamp',
@@ -53,6 +55,7 @@ __PACKAGE__->add_columns(
 
     'last_login' => {
         'data_type'     => 'timestamp',
+        'set_on_create' => 1,
         'set_on_update' => 1,
         'is_nullable'   => 0,
     },
@@ -71,6 +74,6 @@ __PACKAGE__->has_many(
 );
 
 __PACKAGE__->has_many( MatchesPlayers => 'GameMatcher::Schema::Result::MatchesPlayers', 'player' );
-__PACKAGE__->many_to_many( Matches => 'MatchesPlayers', 'match' );
+__PACKAGE__->many_to_many( matches => 'MatchesPlayers', 'match' );
 
 1;

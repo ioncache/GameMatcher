@@ -28,14 +28,8 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id');
 
-__PACKAGE__->belongs_to(
-    Player => 'GameMatcher::Schema::Result::Players',
-    { 'foreign.id' => 'self.player' },
-);
+__PACKAGE__->belongs_to(player => 'GameMatcher::Schema::Result::Players');
 
-__PACKAGE__->belongs_to(
-    Match => 'GameMatcher::Schema::Result::Matches',
-    { 'foreign.id' => 'self.match' },
-);
+__PACKAGE__->belongs_to(match => 'GameMatcher::Schema::Result::Matches');
 
 1;

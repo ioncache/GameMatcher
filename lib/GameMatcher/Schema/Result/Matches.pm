@@ -6,6 +6,8 @@ use warnings;
 
 use base 'DBIx::Class::Core';
 
+__PACKAGE__->load_components(qw< TimeStamp >);
+
 __PACKAGE__->table('matches');
 
 __PACKAGE__->add_columns(
@@ -31,6 +33,6 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('id');
 
 __PACKAGE__->has_many( MatchesPlayers => 'GameMatcher::Schema::Result::MatchesPlayers', 'match' );
-__PACKAGE__->many_to_many( Players => 'MatchesPlayers', 'player' );
+__PACKAGE__->many_to_many( players => 'MatchesPlayers', 'player' );
 
 1;
