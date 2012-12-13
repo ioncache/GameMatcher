@@ -109,11 +109,42 @@
 
         <script src="js/main.js"></script>
 
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
+
+        <!-- begin wundercounter.com code http://www.wundercounter.com/?refID=ioncache -->
+        
+        <script type="text/javascript">
+        
+        function wunder_url () {
+        
+            var lang        = navigator.browserLanguage;
+            var referrer    = document.referrer;
+        
+            if ( referrer == '' )        { referrer = parent.document.referrer }
+            if ( typeof( lang ) == 'undefined' )   { lang = navigator.language }
+        
+            var url = 'http://www.wundercounter.com/cgi-bin/stats/image.cgi?';
+            url += 'WUNVERSION=2.0&user=ioncache';
+            url += "&page=gamematcher.ioncache.com";
+            url += '&wS='    + screen.width;
+            url += '&hS='    + screen.height;
+            url += '&cS='    + screen.colorDepth;
+            url += '&hisl='  + history.length;
+            url += '&WUNL='  + lang;
+            url += '&WUNC='  + navigator.cookieEnabled;
+            url += '&WUNJ='  + navigator.javaEnabled();
+            url += '&WUNR='  + Math.random();
+            url += '&reF='   + referrer;
+        
+            return url;
+        
+        }
+        
+        document.write('<img src="' + wunder_url() + '" alt=" " width="1" height="1" />');
+        // -->
         </script>
+        
+        <noscript><img src="http://www.wundercounter.com/cgi-bin/stats/image.cgi?WUNVERSION=2.0&user=ioncache&page=gamematcher.ioncache.com&digits=0" width="1" height="1" alt=" " />
+        </noscript>
+        <!-- end wundercounter.com code http://www.wundercounter.com/?refID=ioncache -->
     </body>
 </html>
