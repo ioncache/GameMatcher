@@ -70,4 +70,9 @@ __PACKAGE__->has_many(
     { 'foreign.game' => 'self.id' }
 );
 
+__PACKAGE__->has_many(
+    Matches=> 'GameMatcher::Schema::Result::Matches',
+    { 'foreign.game' => 'self.id' }
+);
+
 1;

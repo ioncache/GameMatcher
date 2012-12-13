@@ -28,11 +28,21 @@ __PACKAGE__->add_columns(
         'size'        => 255,
         'is_nullable' => 1
     },
+
+    'game' => {
+        'data_type'   => 'integer',
+        'is_nullable' => 0,
+    },
 );
 
 __PACKAGE__->set_primary_key('id');
 
 __PACKAGE__->has_many( MatchesPlayers => 'GameMatcher::Schema::Result::MatchesPlayers', 'match' );
 __PACKAGE__->many_to_many( players => 'MatchesPlayers', 'player' );
+
+__PACKAGE__->belongs_to(
+    Game => 'GameMatcher::Schema::Result::Games',
+    { 'foreign.id' => 'self.game' },
+);
 
 1;

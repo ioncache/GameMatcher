@@ -21,18 +21,21 @@ my $schema = GameMatcher::Schema->connect(
 #
 #say "done deploy";
 
-my $players = $schema->resultset('GameMatcher::Schema::Result::Players');
+#my $players = $schema->resultset('GameMatcher::Schema::Result::Players');
+#
+#say "done resultset";
+#
+#my $new_player = $players->create(
+#    {   email    => 'markj@oanda.com',
+#        name     => 'Mark Jubenville',
+#        nickname => 'ioncache_' . time,
+#    }
+#);
+#
+#say "done creating player";
+#
+#say $new_player->name;
 
-say "done resultset";
+my $matches = $schema->resultset('GameMatcher::Schema::Result::Matches')->search({}, { order_by => 'start_time DESC' })->all();
 
-my $new_player = $players->create(
-    {   email    => 'markj@oanda.com',
-        name     => 'Mark Jubenville',
-        nickname => 'ioncache_' . time,
-    }
-);
-
-say "done creating player";
-
-say $new_player->name;
-
+p $matches;
