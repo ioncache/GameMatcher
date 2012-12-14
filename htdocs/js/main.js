@@ -4,23 +4,6 @@
         var App;
         App = Em.Application.create();
 
-        // some tmeporary vars for holding server data
-        // until full Ember stuff is in place
-        App.gamelist = [];
-        $.ajax({
-            url: 'http://localhost:5001/games/all',
-            type: 'GET',
-            dataType: 'JSON',
-            success: function(data) {
-                App.gamelist = data.games;
-            },
-            error: function(x, y, z) {
-                console.log(x);
-                console.log(y);
-                console.log(z);
-            }
-        });
-        
         // CONTROLLERS
         App.ApplicationController = Em.Controller.extend();
 
@@ -30,22 +13,78 @@
             content: [],
             init: function() {
                 var self = this;
-                var promise = $.getJSON('http://localhost:5001/matches/all', function(data) {
-                    for ( var i = 0 ; i < data.matches.length ; i++ ) {
-                        self.pushObject(Em.Object.create(data.matches[i]));
+                self._super();
+                var promise = $.ajax({
+                    url: 'http://localhost:5001/matches/all',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(data) {
+                        for ( var i = 0 ; i < data.matches.length ; i++ ) {
+                            console.log(data.matches[i]);
+                            self.pushObject(App.Match.create(data.matches[i]));
+                        }
+                    },
+                    error: function(x, y, z) {
+                        console.log(x);
+                        console.log(y);
+                        console.log(z);
                     }
                 });
-                promise.done(websocket_connect('ws://localhost:5001/matches/new', self));
-                return self.content;
+                //promise.done(websocket_connect('ws://localhost:5001/matches/new', self));
+                //return self.content;
             },
             addMatch: function(match) {
-                this.pushObject(Em.Object.create(match));
+                //this.pushObject(Em.Object.create(match));
             }
         });
 
-        App.GamesController = Em.Controller.extend();
+        App.GamesController = Em.ArrayController.create({
+            content: [],
+            init: function() {
+                var self = this;
+                self._super();
+                $.ajax({
+                    url: 'http://localhost:5001/games/all',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(data) {
+                        for ( var i = 0 ; i < data.games.length ; i++ ) {
+                            self.pushObject(Em.Object.create(data.games[i]));
+                        }
+                    },
+                    error: function(x, y, z) {
+                        console.log(x);
+                        console.log(y);
+                        console.log(z);
+                    }
+                });
+                //return this.content;
+            }
+        });
 
-        App.PlayersController = Em.Controller.extend();
+        App.PlayersController = Em.ArrayController.create({
+            content: [],
+            init: function() {
+                var self = this;
+                self._super();
+                $.ajax({
+                    url: 'http://localhost:5001/players/all',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(data) {
+                        for ( var i = 0 ; i < data.players.length ; i++ ) {
+                            self.pushObject(Em.Object.create(data.players[i]));
+                        }
+                    },
+                    error: function(x, y, z) {
+                        console.log(x);
+                        console.log(y);
+                        console.log(z);
+                    }
+                });
+                //return this.content;
+            }
+        });
 
         // OBJECTS
         App.Match = Ember.Object.extend();
@@ -80,7 +119,7 @@
 
         App.WellView = Em.View.extend({
             templateName: 'well',
-            classNames: ['well']
+            classNames: ['well', 'well_extras']
         });
 
         App.MatchesView = Em.View.extend({
@@ -90,16 +129,20 @@
         });
 
         App.GamesView = Em.View.extend({
-            templateName: 'games'
+            templateName: 'games',
+            controllerBinding: 'App.GamesController',
+            contentBinding: 'controller.content'
         });
 
         App.PlayersView = Em.View.extend({
-            templateName: 'players'
+            templateName: 'players',
+            controllerBinding: 'App.PlayersController',
+            contentBinding: 'controller.content'
         });
 
         // ROUTER
         App.Router = Em.Router.extend({
-            enableLogging: true,
+            //enableLogging: true,
             location: 'hash',
             root: Em.Route.extend({
                 goToMatches: Ember.Route.transitionTo('matches'),

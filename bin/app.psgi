@@ -39,7 +39,6 @@ catch {
 our $event_loop = Mojo::IOLoop->recurring(
     1 => sub {
         while( my $match = shift @{$matches} ) {
-p $match;
             foreach ( keys %{$players} ) {
                 $players->{$_}->send( $j->encode( { match => $match } ) );
             }
@@ -97,10 +96,9 @@ get '/players/all' => sub {
             = $schema->resultset('GameMatcher::Schema::Result::Players')
             ->search(
             { },
-            {   order_by => 'nickname ASC',
-                #prefetch => [
-                #    'Expansions',
-                #],
+            {
+                select => [ 'avatar', 'created', 'last_login', 'name', 'nickname' ],
+                order_by => 'nickname ASC',
                 result_class => 'DBIx::Class::ResultClass::HashRefInflator',
             }
             )->all();
@@ -148,16 +146,15 @@ get '/matches/all' => sub {
             = $schema->resultset('GameMatcher::Schema::Result::Matches')
             ->search(
             { },
-            {   order_by => 'start_time ASC',
+            {   order_by => 'start_time DESC',
                 prefetch => [
                     'Game',
-    
-                    #'MatchesPlayers',
+                    { 'MatchesPlayers' => 'player' },
                 ],
                 result_class => 'DBIx::Class::ResultClass::HashRefInflator',
             }
             )->all();
-            return $self->render({ json => { matches => \@matches } });
+        return $self->render({ json => { matches => \@matches } });
             
     }
     catch {

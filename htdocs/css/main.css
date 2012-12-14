@@ -58,7 +58,7 @@
     padding: 15px;
     margin-bottom: 10px;
     color: #eeeeee;
-    background-color: #6a0711;
+    background-color: #E58790;
     border: 1px solid #cc8388;
     -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
@@ -66,4 +66,8 @@
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
        -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.well_extras {
+    position: relative;
 }

@@ -44,7 +44,7 @@
                         <form class="navbar-form pull-right">
                             <input class="span2" type="text" placeholder="Email" style="font-size: 11px;">
                             <input class="span2" type="password" placeholder="Password"  style="font-size: 11px;">
-                            <button type="submit" class="btn btn-primary">Sign in</button>
+                            <button type="submit" class="btn btn-small btn-primary">Sign In</button>
                         </form>
                     </div>
                 </div>
@@ -52,27 +52,62 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="well">
-            <h1>Current Match List</h1>
-            <p>Some match info here.</p>
+            <h1>Start a Match, Join a Match</h1>
+            <p>...</p>
+            <button type="submit" class="btn btn-primary" style="position: absolute; right: 15px; bottom: 15px;">Add Match</button>
         </script>
         
         <script type="text/x-handlebars" data-template-name="matches">
             {{#each match in content}}
             <div class="match_container">
-                <div class="pull-left">{{match.Game.name}}</div>
-                <div class="pull-right" style="text-align: right;">{{match.start_time}}<br />{{match.location}}</div>
+                <div class="pull-left" style="width: 300px;">
+                    <div class="pull-left label label-primary" style="font-size: 16px; font-weight: normal; padding: 5px 8px;">{{match.Game.name}}</div>
+                </div>
+                <div class="pull-left" style="margin-left: 20px; width: 350px;">
+                    {{#each match_player in match.MatchesPlayers}}
+                        <div><strong>{{match_player.player.name}}</strong> &nbsp;&nbsp; <span class="label label-info">{{match_player.player.nickname}}</span></div>
+                    {{/each}}
+                </div>
+                <div class="pull-right" style="text-align: right;">
+                    {{match.start_time}}<br />
+                    {{match.location}}<br />
+                    <button type="submit" class="btn btn-mini btn-warning">Add Player</button> {{match.MatchesPlayers.length}} / {{match.Game.max_players}} players
+                </div>
             </div>
             {{/each}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="games">
-            <p>Content for Tab 2 goes here.</p>
-            <p>... and the ember.js <a href="https://github.com/emberjs/ember.js">GitHub page</a>.</p>
+            {{#each game in content}}
+            <div class="game_container">
+                <div class="label label-primary" style="font-size: 16px; font-weight: normal; padding: 5px 8px; margin-bottom: 10px;">{{game.name}}</div>
+                <div class="pull-left style="font-size: 12px; font-weight: normal; padding: 5px 8px;">{{game.description}}</div>
+                <div class="pull-right" style="text-align: right;">
+                    {{game.min_players}}-{{game.max_players}} players<br />
+                    {{game.optimal_players}} optimal<br />
+                    Play Time: {{game.playtime}}
+                </div>
+            </div>
+            {{/each}}
         </script>
       
         <script type="text/x-handlebars" data-template-name="players">
-            <p>Content for Tab 3 goes here.</p>
-            <p>Oh, and #emberjs on <a href="irc://irc.freenode.org">irc.freenode.org</a>!</p>
+            {{#each player in content}}
+            <div class="player_container">
+                <div class="pull-left">
+                    <div class="label label-info" style="font-size: 16px; font-weight: normal; padding: 5px 8px; margin-bottom: 10px;">
+                        {{player.nickname}}
+                    </div>
+                    <div class="pull-left label label-important">
+                        {{player.name}}
+                    </div>
+                </div>
+                <div class="pull-right">
+                    Joined: {{player.created}}<br />
+                    Last Login: {{player.last_login}}<br />
+                </div>
+            </div>
+            {{/each}}
         </script>
     </head>
     <body>
@@ -99,7 +134,7 @@
 
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/handlebars-1.0.rc.1.js"></script>
-        <script src="js/vendor/ember-1.0.0-pre.2.min.js"></script>
+        <script src="js/vendor/ember-1.0.0-pre.2.js"></script>
 
         <script src="js/main.js"></script>
 
